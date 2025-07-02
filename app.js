@@ -3,14 +3,15 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-// Serve static files from /public
+// Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
+// Route: Home
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
+// Route: Health check
 app.get('/health', (req, res) => {
   res.send('App is running.');
 });
