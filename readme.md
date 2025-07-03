@@ -1,84 +1,97 @@
-# Riaan's Portfolio Site
+Riaan's Portfolio Site
+This is a personal portfolio website built using Node.js and Express. It showcases a selection of my past projects and is designed to support both local development and automated deployment using modern DevOps tools.
 
-This is a simple Node.js + Express portfolio website to showcase my past projects.
+Tech Stack
+Node.js – Backend runtime
 
-## 🛠 Tech Stack
-- Node.js
-- Express
-- HTML/CSS
+Express.js – Web framework
 
-## 📌 Project Structure
-- `/views`: HTML pages
-- `/public`: Static files (CSS)
-- `/routes`: Routing logic
-- `app.js`: Main app file
+HTML/CSS – Frontend content and styling
 
-## 📈 SDLC Model
-We are using **Agile Kanban**. Tasks are tracked in the GitHub Project board.
+Project Structure
+/views – HTML pages rendered by Express
 
-## 🧪 Features (WIP)
-- Static homepage
-- Project links
-- Health check route
+/public – Static assets like CSS
 
-## 💻 Local Development
+/routes – Routing logic
 
-```bash
+app.js – Main application file
+
+SDLC Model
+This project follows the Agile Kanban approach:
+
+Tasks are tracked using the GitHub Project board
+
+Features are implemented in small, iterative updates
+
+CI/CD automates testing and deployment
+
+Features
+Static homepage with welcome message and about section
+
+Project buttons linking to GitHub repositories
+
+Health-check route for readiness probes (e.g., /healthz)
+
+Local Development
+To run locally:
+
+bash
+Copy
+Edit
 npm install
 node app.js
-## 🐳 Running with Docker
+Open your browser and go to http://localhost:3000.
 
-### Build the image:
-```bash
+Docker Instructions
+To build and run the app using Docker:
+
+bash
+Copy
+Edit
 docker build -t riaan-portfolio .
+docker run -p 3000:3000 riaan-portfolio
+CI/CD Pipeline Overview
+The application uses a Jenkins pipeline with the following stages:
 
-## 🚀 CI/CD Pipeline (Automated Deployment via Jenkins)
+Checkout from GitHub
 
-This project uses a Jenkins-based CI/CD pipeline to automatically build, publish, and deploy the Node.js portfolio application using Docker and Helm.
+Build Docker Image
 
-### 📦 Pipeline Stages
+Push to Docker Hub
 
-1. **Build**  
-   Jenkins uses the `Dockerfile` to build a production-ready image of the portfolio app.
+Deploy using Helm on Minikube
 
-2. **Push to Docker Hub**  
-   The Docker image is pushed to Docker Hub using secure credentials.
+Tools & Technologies Used
+Tool	Purpose
+Jenkins	CI/CD automation
+Docker	Containerization
+Helm	Kubernetes deployment
+Minikube	Local Kubernetes cluster
+GitHub	Source code and Jenkinsfile repository
 
-3. **Deploy via Helm on Minikube**  
-   Jenkins uses Helm to deploy the Docker image into a local Kubernetes cluster (Minikube).
+Credentials Management
+Docker Hub Login: Managed securely in Jenkins under dockerhub-creds
 
----
+GitHub Access: If the repo is private, credentials are also stored in Jenkins securely
 
-### 🛠️ Tools & Technologies
+Deployment Workflow Summary
+text
+Copy
+Edit
+GitHub (push) 
+   │
+   ▼
+Jenkins Pipeline
+   ├── Build Docker image
+   ├── Push to Docker Hub
+   └── Deploy with Helm to Minikube
+Final Notes
+This project is both a technical showcase and a live example of a full DevOps workflow. It demonstrates:
 
-| Tool        | Purpose                             |
-|-------------|-------------------------------------|
-| **Jenkins** | CI/CD orchestration                 |
-| **Docker**  | Containerization of the Node.js app |
-| **Helm**    | Kubernetes deployment templating    |
-| **Minikube**| Local Kubernetes cluster            |
-| **GitHub**  | Source code and Jenkinsfile repo    |
+Clean code separation (routes, views, assets)
 
----
+Automated builds and deployments
 
-### 🔐 Credentials Management
+Kubernetes-based container orchestration with Helm
 
-- **Docker Hub Login**  
-  Managed using a Jenkins credential with ID: `dockerhub-creds`  
-  (Stored securely via Jenkins Credential Manager)
-
-- **GitHub Access**  
-  If the repo is private, GitHub credentials can also be stored in Jenkins under a global credential and referenced during job setup.
-
----
-
-### 🧭 CI/CD Flow Diagram (Text Version)
-
-```text
-[GitHub Repo] 
-     │
-     ▼
-[Jenkins Pipeline]
-     ├── Stage 1: Build Docker Image
-     ├── Stage 2: Push to Docker Hub
-     └── Stage 3: Deploy via Helm to Minikube
