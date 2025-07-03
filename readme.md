@@ -1,97 +1,106 @@
-Riaan's Portfolio Site
-This is a personal portfolio website built using Node.js and Express. It showcases a selection of my past projects and is designed to support both local development and automated deployment using modern DevOps tools.
+# 🚀 Riaan's Portfolio Site
 
-Tech Stack
-Node.js – Backend runtime
+This is a simple Node.js + Express portfolio website to showcase my past projects.
 
-Express.js – Web framework
+---
 
-HTML/CSS – Frontend content and styling
+## 🛠 Tech Stack
 
-Project Structure
-/views – HTML pages rendered by Express
+- Node.js  
+- Express  
+- HTML/CSS  
 
-/public – Static assets like CSS
+---
 
-/routes – Routing logic
+## 📁 Project Structure
 
-app.js – Main application file
+- `/views` – HTML pages  
+- `/public` – Static assets (CSS)  
+- `/routes` – Routing logic  
+- `app.js` – Main application file  
 
-SDLC Model
-This project follows the Agile Kanban approach:
+---
 
-Tasks are tracked using the GitHub Project board
+## 📈 SDLC Model
 
-Features are implemented in small, iterative updates
+We are using the **Agile Kanban** model.  
+All tasks are tracked on the GitHub Project board for transparency and iterative development.
 
-CI/CD automates testing and deployment
+---
 
-Features
-Static homepage with welcome message and about section
+## ✨ Features
 
-Project buttons linking to GitHub repositories
+- Static homepage with about section  
+- Buttons linking to GitHub projects  
+- Health check route for container readiness  
 
-Health-check route for readiness probes (e.g., /healthz)
+---
 
-Local Development
-To run locally:
+## 💻 Local Development
 
-bash
-Copy
-Edit
+Run the following commands to start the app locally:
+
+```bash
 npm install
 node app.js
-Open your browser and go to http://localhost:3000.
+Access the site via:
 
-Docker Instructions
-To build and run the app using Docker:
+arduino
+Copy
+Edit
+http://localhost:3000
+🐳 Running with Docker
+To containerize and run your app:
 
 bash
 Copy
 Edit
 docker build -t riaan-portfolio .
 docker run -p 3000:3000 riaan-portfolio
-CI/CD Pipeline Overview
-The application uses a Jenkins pipeline with the following stages:
+⚙️ CI/CD Pipeline (Jenkins + Docker + Helm)
+This project includes a CI/CD pipeline built with Jenkins that automates building, pushing, and deploying the application via Docker and Helm to a local Kubernetes cluster using Minikube.
 
+📦 Pipeline Stages
 Checkout from GitHub
+Jenkins pulls code from the jenkins-ci branch.
 
 Build Docker Image
+Jenkins uses the Dockerfile to generate a container image.
 
 Push to Docker Hub
+The image is pushed to Docker Hub using secure credentials.
 
-Deploy using Helm on Minikube
+Deploy to Kubernetes (via Helm)
+Jenkins uses Helm to deploy the app to Minikube.
 
-Tools & Technologies Used
+🧰 Tools and Technologies
 Tool	Purpose
-Jenkins	CI/CD automation
-Docker	Containerization
-Helm	Kubernetes deployment
-Minikube	Local Kubernetes cluster
-GitHub	Source code and Jenkinsfile repository
+🧪 Jenkins	Orchestrates the CI/CD pipeline
+🐋 Docker	Containers the Node.js application
+📦 Helm	Manages Kubernetes deployments
+☸️ Minikube	Provides a local Kubernetes cluster
+🐙 GitHub	Hosts code and Jenkins pipeline config
 
-Credentials Management
-Docker Hub Login: Managed securely in Jenkins under dockerhub-creds
+🔐 Credentials Management
+Docker Hub
+Stored in Jenkins as dockerhub-creds. Used for login during push.
 
-GitHub Access: If the repo is private, credentials are also stored in Jenkins securely
+GitHub
+If private, credentials (PAT or username/password) should also be stored in Jenkins.
 
-Deployment Workflow Summary
+🧭 CI/CD Flow Diagram
 text
 Copy
 Edit
-GitHub (push) 
-   │
-   ▼
-Jenkins Pipeline
-   ├── Build Docker image
-   ├── Push to Docker Hub
-   └── Deploy with Helm to Minikube
-Final Notes
-This project is both a technical showcase and a live example of a full DevOps workflow. It demonstrates:
+[GitHub Repo] 
+     │
+     ▼
+[Jenkins Pipeline]
+     ├── Stage 1: Build Docker Image
+     ├── Stage 2: Push to Docker Hub
+     └── Stage 3: Deploy via Helm to Minikube
+✅ Final Notes
+This project is both a portfolio showcase and a full-stack DevOps demo.
+It highlights core principles like containerization, CI/CD, and Git-based workflow using a simple but structured tech stack.
 
-Clean code separation (routes, views, assets)
-
-Automated builds and deployments
-
-Kubernetes-based container orchestration with Helm
-
+For any issues or suggestions, feel free to open a pull request or issue in the GitHub repo.
