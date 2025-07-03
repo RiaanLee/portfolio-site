@@ -82,3 +82,67 @@ This project uses a Jenkins-based CI/CD pipeline to automatically build, publish
      ├── Stage 1: Build Docker Image
      ├── Stage 2: Push to Docker Hub
      └── Stage 3: Deploy via Helm to Minikube
+
+## 🔐 Security Hardening
+📄 [View ZAP Report](./docs/zap-scan-report.html)
+
+### Tools Used:
+- [Helmet](https://www.npmjs.com/package/helmet) for HTTP security headers
+- Self-signed SSL certificate via OpenSSL for HTTPS
+- `npm audit` for static security analysis (SAST)
+- [OWASP ZAP](https://owasp.org/www-project-zap/) for dynamic security analysis (DAST)
+
+### Summary:
+- HTTPS enabled on `https://localhost:3443`
+- All audit results show 0 vulnerabilities
+- Helmet automatically configures common security headers
+- OWASP ZAP used to test runtime vulnerabilities like XSS and CSP
+
+
+## 🔐 Phase 5: Security Hardening
+
+### 🔎 SAST Scan (Static Analysis)
+- **Tool Used**: `npm audit`
+- **Result**: ✅ No vulnerabilities found in dependencies.
+
+### 🛡️ DAST Scan (Dynamic Testing)
+- **Tool Used**: OWASP ZAP 2.16.1
+- **Target**: https://localhost:3443
+- **Findings Summary**:
+  - **Total Alerts**: 7
+    - 🟠 Medium Risk: 3
+    - 🟡 Low Risk: 3
+    - ⚪ Informational: 1
+
+### ⚠️ Key Issues Identified:
+| Risk | Issue |
+|------|-------|
+| 🟠 Medium | CSP: Missing fallback directives |
+| 🟠 Medium | CSP: Wildcard directive present |
+| 🟠 Medium | CSP: `style-src 'unsafe-inline'` |
+| 🟡 Low | Missing Strict-Transport-Security header |
+| 🟡 Low | X-Content-Type-Options header missing |
+| 🟡 Low | Server leaks info via `X-Powered-By` |
+| ⚪ Info | Weak Cache-Control directives |
+
+### 🛠️ Mitigations Implemented:
+- [x] Used `helmet` middleware in Express:
+  ```js
+  const helmet = require('helmet');
+  app.use(helmet());
+
+  ## 📈 Monitoring Setup
+
+We used **Prometheus + Grafana** to monitor the application running on Minikube.
+
+- **Prometheus** scrapes app and container metrics
+- **Grafana** visualizes the metrics in dashboards
+
+**Setup Steps:**
+- Installed Prometheus and Grafana using Helm
+- Port-forwarded Grafana on `localhost:3000`
+- Connected Prometheus as a data source
+- Created a dashboard using the `up` metric to verify container status
+
+> ![Grafana Screenshot](./docs/grafana-dashboard.png)
+
