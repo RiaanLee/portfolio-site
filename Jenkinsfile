@@ -1,16 +1,26 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:20.16.0' // or 'node:18'
+      args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
+  }
 
   environment {
-    DOCKER_IMAGE = 'riaanlee/my-portfolio-app:latest'
+    DOCKER_IMAGE = 'your-dockerhub-username/my-portfolio-app:latest'
   }
 
   stages {
-    stage('Install Dependencies') {
+    stage('Check Node Version') {
       steps {
         sh 'node -v'
         sh 'npm -v'
-        sh 'npm install'
+      }
+    }
+
+    stage('Install Dependencies') {
+      steps {
+        sh 'npm install --no-audit --no-fund --prefer-offline'
       }
     }
 
