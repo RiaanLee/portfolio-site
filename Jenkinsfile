@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:20.16.0'
-      args '-v /var/run/docker.sock:/var/run/docker.sock'
-    }
-  }
+  agent any
 
   environment {
     DOCKER_IMAGE = 'riaanlee/my-portfolio-app:latest'
@@ -13,6 +8,8 @@ pipeline {
   stages {
     stage('Install Dependencies') {
       steps {
+        sh 'node -v'
+        sh 'npm -v'
         sh 'npm install'
       }
     }
