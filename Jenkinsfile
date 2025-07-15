@@ -1,13 +1,13 @@
 pipeline {
   agent {
     docker {
-      image 'node:20.16.0' // or 'node:18'
+      image 'node:18' // or 'node:18'
       args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
   }
 
   environment {
-    DOCKER_IMAGE = 'your-dockerhub-username/my-portfolio-app:latest'
+    DOCKER_IMAGE = 'riaanlee/my-portfolio-app:latest'
   }
 
   stages {
