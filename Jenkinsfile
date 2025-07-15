@@ -7,11 +7,7 @@ pipeline {
 
   stages {
 
-    stage('Checkout Code') {
-      steps {
-        git credentialsId: 'Github', url: 'https://github.com/riaanlee/portfolio-site.git'
-      }
-    }
+    
 
     stage('Install Dependencies') {
       steps {
