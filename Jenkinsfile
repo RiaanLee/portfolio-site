@@ -9,7 +9,7 @@ pipeline {
 
     stage('Checkout Code') {
       steps {
-        git credentialsId: 'github', url: 'https://github.com/riaanlee/portfolio-site.git'
+        git credentialsId: 'Github', url: 'https://github.com/riaanlee/portfolio-site.git'
       }
     }
 
