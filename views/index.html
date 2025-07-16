@@ -1,24 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Riaan's Portfolio</title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Welcome to My Portfolio</h1>
 
-  <div class="about">
-    <p>Hi, I'm Riaan Makumbi — a passionate developer focused on building clean, modern web apps. I enjoy working with JavaScript, Node.js, and DevOps tooling like Docker, Kubernetes, and Jenkins.</p>
-    <p>Below are a few of my highlighted projects. More coming soon!</p>
-  </div>
+  <header>
+    <h1>Welcome to My Portfolio</h1>
+    <p class="subtitle">By Riaan Lee Wambua Makumbi</p>
+  </header>
 
-  <h2>Featured Projects</h2>
+  <section class="about">
+    <h2>About Me</h2>
+    <p>Hi, I'm Riaan — a passionate developer and current Business IT student at Strathmore University. I specialize in web development, DevOps, and digital marketing, with strong leadership and communication skills.</p>
+    <p>Currently, I'm leading digital strategy at Edmaso Learning Center and mentoring students in tech and sports at Caplora School. I'm driven by purpose and excited to build innovative web applications!</p>
+  </section>
 
-  <div class="button-group">
-    <a class="button" href="https://github.com/RiaanLee/school-website" target="_blank">School Website</a>
-    <a class="button" href="https://github.com/RiaanLee/weather-app" target="_blank">Weather App</a>
-    <a class="button" href="https://github.com/RiaanLee/portfolio-site" target="_blank">This Portfolio Site</a>
-  </div>
+  <section class="projects">
+    <h2>Featured Projects</h2>
+    <div class="project-cards">
+
+      <div class="card">
+        <img src="https://source.unsplash.com/featured/?school" alt="School Website">
+        <h3>School Website</h3>
+        <p>A complete school information platform using HTML, CSS & JS.</p>
+        <a href="https://github.com/RiaanLee/school-website" target="_blank">View on GitHub</a>
+      </div>
+
+      <div class="card">
+        <img src="https://source.unsplash.com/featured/?weather" alt="Weather App">
+        <h3>Weather App</h3>
+        <p>Fetches real-time weather data using JavaScript APIs.</p>
+        <a href="https://github.com/RiaanLee/weather-app" target="_blank">View on GitHub</a>
+      </div>
+
+      <div class="card">
+        <img src="https://source.unsplash.com/featured/?portfolio" alt="Portfolio Site">
+        <h3>This Portfolio</h3>
+        <p>Fully responsive site showcasing my career, CV, and projects.</p>
+        <a href="https://github.com/RiaanLee/portfolio-site" target="_blank">View on GitHub</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="cv">
+    <h2>Professional Summary & CV</h2>
+    <p>I’m pursuing a diploma in Business Information Technology at Strathmore University. I’ve led and developed digital projects at Caplora International and Edmaso Learning Center, and actively pitch ideas at events like the Ideas Festival and Hult Prize.</p>
+    <p><strong>Highlights:</strong> Technical skills in JavaScript, PHP, SQL, content marketing, project leadership, and digital transformation for schools.</p>
+    <a href="/cv.pdf" class="download-cv" target="_blank">📄 Download My Full CV</a>
+  </section>
+
+  <footer>
+    <h3>Contact Me</h3>
+    <p>📍 Milimani Executive Apartments, Milimani Road, Nairobi</p>
+    <p>📞 +254726357492</p>
+    <p>📧 <a href="mailto:rlwmakumbi@gmail.com">rlwmakumbi@gmail.com</a></p>
+    <p>Connect on <a href="https://github.com/RiaanLee" target="_blank">GitHub</a></p>
+    <p>&copy; 2025 Riaan Makumbi. All rights reserved.</p>
+  </footer>
 
 </body>
 </html>
