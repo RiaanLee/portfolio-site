@@ -1,49 +1,100 @@
 pipeline {
-  agent any
+    agent any
 
-  environment {
-    DOCKER_IMAGE = 'riaanlee/my-portfolio-app:latest'
-  }
-
-  stages {
-    stage('Check Node Version') {
-      steps {
-        sh 'node -v'
-        sh 'npm -v'
-        sh 'docker -v'
-      }
+    tools {
+        jdk 'jdk17'
+        nodejs 'node16'
     }
 
-    stage('Install Dependencies') {
-      steps {
-        sh 'npm install'
-      }
+    environment {
+        SCANNER_HOME = tool 'sonar-scanner'
+        DOCKER_IMAGE = 'riaanlee/portfolio-app:latest'
     }
 
-    stage('Build Docker Image') {
-      steps {
-        sh "docker build -t $DOCKER_IMAGE ."
-      }
-    }
-
-    stage('Push to Docker Hub') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-          sh """
-            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-            docker push $DOCKER_IMAGE
-          """
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
         }
-      }
-    }
-  }
 
-  post {
-    success {
-      echo '✅ Build and push successful!'
+        stage('Checkout from Git') {
+            steps {
+                git branch: 'main', url: 'https://github.com/riaanlee/portfolio-site.git'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonar-server') {
+                    sh '''$SCANNER_HOME/bin/sonar-scanner \
+                        -Dsonar.projectKey=portfolio \
+                        -Dsonar.projectName=portfolio-site'''
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token'
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('OWASP Dependency Check') {
+            steps {
+                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
+
+        stage('Trivy FS Scan') {
+            steps {
+                sh 'trivy fs . > trivyfs.txt'
+            }
+        }
+
+        stage('Docker Build & Push') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                        sh "docker build -t $DOCKER_IMAGE ."
+                        sh "docker push $DOCKER_IMAGE"
+                    }
+                }
+            }
+        }
+
+        stage('Trivy Image Scan') {
+            steps {
+                sh "trivy image $DOCKER_IMAGE > trivyimage.txt"
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    dir('Kubernetes') {
+                        sh 'kubectl apply -f Kubernetes/deployment.yml'
+sh 'kubectl apply -f Kubernetes/service.yml'
+
+                    }
+                }
+            }
+        }
     }
-    failure {
-      echo '❌ Pipeline failed.'
-    }
-  }
-}
+
+    post {
+        always {
+            emailext attachLog: true,
+                subject: "'${currentBuild.result}'",
+                body: "Portfolio CI/CD Pipeline<br/>" +
+                      "Build: ${env.BUILD_NUMBER}<br/>" +
+                      "Sta
