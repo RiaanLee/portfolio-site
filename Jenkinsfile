@@ -1,14 +1,15 @@
+stage('Clean Workspace') {
+    steps {
+        cleanWs()
+    }
+}
 pipeline {
     agent {
         docker {
             image 'node:18' // or 'node:20' if you're using 20.x
         }}
     stages {
-      stage('Clean Workspace') {
-    steps {
-        cleanWs()
-    }
-}
+      
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
