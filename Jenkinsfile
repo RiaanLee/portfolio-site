@@ -98,4 +98,10 @@ sh 'kubectl apply -f Kubernetes/service.yml'
                 subject: "'${currentBuild.result}'",
                 body: "Portfolio CI/CD Pipeline<br/>" +
                       "Build: ${env.BUILD_NUMBER}<br/>" +
-                      "Sta
+                      "Status: ${currentBuild.result}<br/>" +
+                      "URL: ${env.BUILD_URL}",
+                to: 'iambatmanthegoat@gmail.com',
+                attachmentsPattern: 'trivyfs.txt,trivyimage.txt'
+        }
+    }
+}
