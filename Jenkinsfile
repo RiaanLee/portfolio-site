@@ -12,11 +12,12 @@ pipeline {
     }
 
     stages {
-        stage('Clean Workspace') {
-            steps {
-                cleanWs()
-            }
-        }
+        stage('Clean workspace') {
+    steps {
+        deleteDir() // Jenkins pipeline method
+    }
+}
+
 
         stage('Checkout from Git') {
             steps {
