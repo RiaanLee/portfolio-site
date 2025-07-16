@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
-        DOCKER_IMAGE = 'riaanlee/portfolio-app:latest'
+        DOCKER_IMAGE = 'riaanlee/my-portfolio-app'
     }
 
     stages {
