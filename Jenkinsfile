@@ -28,9 +28,14 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonar-server') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner \
-                        -Dsonar.projectKey=portfolio \
-                        -Dsonar.projectName=portfolio-site'''
+                    sh '''
+    export JAVA_HOME=${JAVA_HOME}
+    export PATH=$JAVA_HOME/bin:$PATH
+    $SCANNER_HOME/bin/sonar-scanner \
+        -Dsonar.projectKey=portfolio \
+        -Dsonar.projectName=portfolio-site
+'''
+
                 }
             }
         }
